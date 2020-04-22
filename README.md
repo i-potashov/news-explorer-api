@@ -20,28 +20,23 @@ Backend API on a subdomain [API.Backa.ru](https://api.backa.ru)
 Using the Postman program, you can run multiple queries:
 
 ```sh
-POST https://sprint15yp.tk/signup
+POST https://backa.ru/signup
 ```
 
 ```sh
-POST https://sprint15yp.tk/signin
-```
-
-```sh
-POST https://sprint15yp.tk/clearcookie
+POST https://backa.ru/signin
 ```
 
 After authorization:
 ```sh
-GET https://sprint15yp.tk/users
-GET https://sprint15yp.tk/users/:userId
+GET https://backa.ru/users/me
 ```
 ```sh
-POST https://sprint15yp.tk/cards
+POST https://backa.ru/articles
 ```
 
 ```sh
-GET https://sprint15yp.tk/cards
+DELETE https://backa.ru/articles/:id
 ```
 
 ## Launch locally
@@ -77,11 +72,10 @@ $ npm run eslintfix
 ```sh
 POST /signin
 POST /signup
-POST /clearcookie
-GET /users
-GET /users/:userId
-GET /cards
-POST /cards
+GET /users/me
+POST /articles
+GET /articles
+DELETE /articles/:id
 ```
 ## Todos
 

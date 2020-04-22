@@ -24,16 +24,10 @@ const articleCreateCheck = celebrate({
     date: Joi.string().required().min(2).max(30),
     source: Joi.string().required().min(2).max(30),
     link: Joi.string().required().uri(),
-    image:Joi.string().required().uri(),
-  }),
-});
-
-const idRequestCheck = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.objectId().required(),
+    image: Joi.string().required().uri(),
   }),
 });
 
 module.exports = {
-  userLoginCheck, userCreateCheck, articleCreateCheck, idRequestCheck,
+  userLoginCheck, userCreateCheck, articleCreateCheck,
 };

@@ -15,7 +15,7 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: { // Хз надо разобраться
+  date: {
     type: String,
     required: true,
   },
@@ -31,8 +31,10 @@ const articleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: { // Нужно задать поведение по умолчанию, чтобы база данных не возвращала это поле.
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    select: false,
   },
 });
 
@@ -40,8 +42,6 @@ articleSchema.path('link').validate(validator.isURL, INVALID_LINK);
 articleSchema.path('image').validate(validator.isURL, INVALID_LINK);
 
 // eslint-disable-next-line func-names
-articleSchema.statics.filterArticles = ({owner, __v, ...rest}) => rest;
+articleSchema.statics.filterArticles = ({ owner, __v, ...rest }) => rest;
 
 module.exports = mongoose.model('article', articleSchema);
-
-
