@@ -1,5 +1,6 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 const { ITEM_NOT_FOUND, ACCESS_DENIED } = require('../configuration/constants');
 
 module.exports.getArticles = (req, res, next) => {
@@ -32,7 +33,7 @@ module.exports.deleteArticle = (req, res, next) => {
         return Article.remove(article)
           .then(() => res.status(200).send(Article.filterArticles(article._doc)));
       }
-      return res.status(403).send({ message: ACCESS_DENIED });
+      throw new ForbiddenError(ACCESS_DENIED);
     })
     .catch(next);
 };

@@ -1,11 +1,18 @@
-const { SERVER_ERROR } = require('../configuration/constants');
+const { SERVER_ERROR, INVALID_LINK, NOT_UNIQUE } = require('../configuration/constants');
 
-// eslint-disable-next-line no-unused-vars
 const errorHandler = (err, req, res, next) => {
   const { statusCode = 500, message } = err;
-  console.log(err.stack);
   console.log('The centralized error handler was triggered');
-  res.status(statusCode).send({ message: statusCode === 500 ? SERVER_ERROR : message });
+  if (err.name === 'ValidationError') {
+    if (err._message === 'user validation failed') {
+      res.status(409).send({ message: NOT_UNIQUE });
+    } else {
+      res.status(400).send({ message: INVALID_LINK });
+    }
+  } else {
+    res.status(statusCode).send({ message: statusCode === 500 ? SERVER_ERROR : message });
+  }
+  next();
 };
 
 module.exports = {

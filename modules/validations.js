@@ -1,4 +1,6 @@
 const { celebrate, Joi } = require('celebrate');
+const BadRequestError = require('../errors/BadRequest');
+const { ITEM_NOT_FOUND } = require('../configuration/constants');
 Joi.objectId = require('joi-objectid')(Joi);
 
 const userLoginCheck = celebrate({
@@ -28,6 +30,12 @@ const articleCreateCheck = celebrate({
   }),
 });
 
+const articleIdCheck = celebrate({
+  params: Joi.object().keys({
+    articleId: Joi.objectId().required().error(new BadRequestError(ITEM_NOT_FOUND)),
+  }),
+});
+
 module.exports = {
-  userLoginCheck, userCreateCheck, articleCreateCheck,
+  userLoginCheck, userCreateCheck, articleCreateCheck, articleIdCheck,
 };

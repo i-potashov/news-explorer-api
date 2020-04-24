@@ -1,9 +1,9 @@
 const articles = require('express').Router();
 const { getArticles, createArticle, deleteArticle } = require('../controllers/articles');
-const { articleCreateCheck } = require('../modules/validations');
+const { articleCreateCheck, articleIdCheck } = require('../modules/validations');
 
-articles.get('/articles', getArticles);
-articles.post('/articles', articleCreateCheck, createArticle);
-articles.delete('/articles/:articleId', deleteArticle);
+articles.get('/', getArticles);
+articles.post('/', articleCreateCheck, createArticle);
+articles.delete('/:articleId', articleIdCheck, deleteArticle);
 
 module.exports = articles;

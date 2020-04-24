@@ -41,7 +41,6 @@ const articleSchema = new mongoose.Schema({
 articleSchema.path('link').validate(validator.isURL, INVALID_LINK);
 articleSchema.path('image').validate(validator.isURL, INVALID_LINK);
 
-// eslint-disable-next-line func-names
 articleSchema.statics.filterArticles = ({ owner, __v, ...rest }) => rest;
 
 module.exports = mongoose.model('article', articleSchema);

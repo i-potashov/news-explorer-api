@@ -20,23 +20,23 @@ Backend API on a subdomain [API.Backa.ru](https://api.backa.ru)
 Using the Postman program, you can run multiple queries:
 
 ```sh
-POST https://backa.ru/signup
+POST https://api.backa.ru/signup
 ```
 
 ```sh
-POST https://backa.ru/signin
+POST https://api.backa.ru/signin
 ```
 
 After authorization:
 ```sh
-GET https://backa.ru/users/me
+GET https://api.backa.ru/users/me
 ```
 ```sh
-POST https://backa.ru/articles
+POST https://api.backa.ru/articles
 ```
 
 ```sh
-DELETE https://backa.ru/articles/:id
+DELETE https://api.backa.ru/articles/:id
 ```
 
 ## Launch locally
