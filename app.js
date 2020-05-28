@@ -13,10 +13,6 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cors());
-
 mongoose.connect(DB, {
   useNewUrlParser: true,
   useCreateIndex: true,
@@ -24,13 +20,19 @@ mongoose.connect(DB, {
 });
 
 app.use(limiter);
-app.use(requestLogger); // подключаем логгер запросов
+app.use(requestLogger);
+
+app.use(cors());
+
 app.use(helmet());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(routes);
-app.use(errorLogger); // подключаем логгер ошибок
-app.use(errors()); // Обработчик ошибок celebrate
-app.use(errorHandler); // Централизованный обработчик ошибок
+app.use(errorLogger);
+app.use(errors());
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
