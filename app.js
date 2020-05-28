@@ -15,6 +15,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 mongoose.connect(DB, {
   useNewUrlParser: true,
@@ -25,7 +26,6 @@ mongoose.connect(DB, {
 app.use(limiter);
 app.use(requestLogger); // подключаем логгер запросов
 app.use(helmet());
-app.use(cors(CORS_SET));
 app.use(cookieParser());
 app.use(routes);
 app.use(errorLogger); // подключаем логгер ошибок
