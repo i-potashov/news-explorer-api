@@ -13,7 +13,6 @@ const NotFoundError = require('../errors/NotFoundError');
 // };
 
 module.exports.getUser = (req, res, next) => {
-
   console.log('reqUser-------->>>>', req.user);
   User.findById(req.user._id)
     .orFail(() => {

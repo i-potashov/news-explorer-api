@@ -35,4 +35,3 @@ app.use(errorHandler); // Централизованный обработчик 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
-
