@@ -6,12 +6,8 @@ const { JWT_KEY } = require('../configuration/config');
 const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.getUser = (req, res, next) => {
-  console.log(req.user._id);
   User.findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError(USER_NOT_FOUND);
-    })
-    .then((user) => res.status(200).send({ data: user }))
+    .then((user) => res.send({ name: user.name, email: user.email }))
     .catch(next);
 };
 
@@ -34,17 +30,19 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
-    .then(user => {
+  User.findUserByCredentials(email, password)
+    .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_KEY, { expiresIn: '7d' });
-      const { name } = user;
-
-      res.cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: false
-      });
-      res.status(200).send({ name, email });
+      return res
+        .set({
+          authorization: `Bearer ${token}`,
+        })
+        .cookie('jwt', {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: true,
+        })
+        .send({ token });
     })
     .catch(next);
 };

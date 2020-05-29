@@ -1,21 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const helmet = require('helmet');
+
+const app = express();
 const cors = require('cors');
-const { errors } = require('celebrate');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const { errors } = require('celebrate');
 const routes = require('./routes');
 const { DB, PORT } = require('./configuration/config');
 const { errorHandler } = require('./middlewares/errorHandler');
 const { limiter } = require('./middlewares/rateLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const app = express();
-app.use(cors());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 mongoose.connect(DB, {
   useNewUrlParser: true,
@@ -24,13 +20,18 @@ mongoose.connect(DB, {
 });
 
 app.use(limiter);
-app.use(requestLogger); // подключаем логгер запросов
+app.use(requestLogger);
+app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(routes);
-app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors()); // Обработчик ошибок celebrate
+app.use(errorLogger); // подключаем логгер ошибок
 app.use(errorHandler); // Централизованный обработчик ошибок
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
+
