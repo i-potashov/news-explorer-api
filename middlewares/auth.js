@@ -5,6 +5,7 @@ const LoginError = require('../errors/LoginError');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
+  console.log('authorization------->>>>>',authorization);
   if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new LoginError(USER_NOT_FOUND);
   }
@@ -14,9 +15,11 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, JWT_KEY);
   } catch (error) {
+    console.log('second');
     throw new LoginError(USER_NOT_FOUND);
   }
+  console.log('payload------->>>>>',payload);
   req.user = payload;
 
-  next();
+  return next();
 };
