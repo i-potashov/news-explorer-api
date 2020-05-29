@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   console.log('authorization------->>>>>', authorization);
   if (!authorization || !authorization.startsWith('Bearer ')) {
+    console.log('first ERR');
     throw new LoginError(USER_NOT_FOUND);
   }
   const token = authorization.replace('Bearer ', '');
