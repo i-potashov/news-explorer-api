@@ -6,6 +6,7 @@ const { JWT_KEY } = require('../configuration/config');
 const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.getUser = (req, res, next) => {
+  console.log(req.user._id);
   User.findById(req.user._id)
     .orFail(() => {
       throw new NotFoundError(USER_NOT_FOUND);
