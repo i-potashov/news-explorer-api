@@ -15,6 +15,7 @@ module.exports.getUser = (req, res, next) => {
     .catch(next);
 };
 
+
 module.exports.createUser = (req, res, next) => {
   const {
     email, password, name,
@@ -34,16 +35,16 @@ module.exports.createUser = (req, res, next) => {
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_KEY, {
-        expiresIn: '7d',
-      });
+    .then(user => {
+      const token = jwt.sign({ _id: user._id }, JWT_KEY, { expiresIn: '7d' });
+      const { name } = user;
+
       res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: 'lax',
+        sameSite: false
       });
-      res.send({ token, user: user.name });
+      res.status(200).send({ name, email });
     })
     .catch(next);
 };
