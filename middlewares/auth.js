@@ -4,10 +4,11 @@ const { JWT_KEY } = require('../configuration/config');
 const LoginError = require('../errors/LoginError');
 
 module.exports = (req, res, next) => {
-  const { jwt: token } = req.cookies;
-  if (!token) {
+  const { authorization } = req.headers;
+  if (!authorization || !authorization.startsWith('Bearer ')) {
     throw new LoginError(USER_NOT_FOUND);
   }
+  const token = authorization.replace('Bearer ', '');
   let payload;
   try {
     payload = jwt.verify(token, JWT_KEY);
