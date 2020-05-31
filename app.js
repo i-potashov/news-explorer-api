@@ -22,8 +22,8 @@ mongoose.connect(DB, {
 
 // Массив разешённых доменов
 const allowedCors = [
-  'https://api.backa.ru',
-  'http://api.backa.ru',
+  'https://i-potashov.github.io',
+  'http://i-potashov.github.io',
   'localhost:3000'
 ];
 
@@ -37,7 +37,7 @@ app.use(function(req, res, next) {
 
 app.use(limiter);
 app.use(requestLogger);
-app.use(cors());
+// app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
