@@ -20,11 +20,6 @@ mongoose.connect(DB, {
   useUnifiedTopology: true,
 });
 
-app.use(cors({
-  origin: '*',
-  method: 'GET, POST OPTIONS, DELETE, HEAD',
-}));
-
 app.use(limiter);
 app.use(requestLogger);
 
