@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -10,7 +9,7 @@ const { errors } = require('celebrate');
 const routes = require('./routes');
 const { DB, PORT } = require('./configuration/config');
 const { errorHandler } = require('./middlewares/errorHandler');
-const { limiter } = require('./middlewares/rateLimiter');
+// const { limiter } = require('./middlewares/rateLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 mongoose.connect(DB, {
@@ -20,7 +19,7 @@ mongoose.connect(DB, {
   useUnifiedTopology: true,
 });
 
-app.use(limiter);
+// app.use(limiter);
 app.use(requestLogger);
 
 app.use(helmet());
