@@ -22,7 +22,10 @@ mongoose.connect(DB, {
 
 app.use(limiter);
 app.use(requestLogger);
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  method: 'GET, POST OPTIONS, DELETE, HEAD',
+}));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
