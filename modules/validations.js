@@ -21,10 +21,10 @@ const userCreateCheck = celebrate({
 const articleCreateCheck = celebrate({
   body: Joi.object().keys({
     keyword: Joi.string().required().min(2).max(30),
-    title: Joi.string().required().min(2).max(30),
+    title: Joi.string().required().min(2).max(100),
     text: Joi.string().required().min(2).max(3000),
     date: Joi.string().required().min(2).max(30),
-    source: Joi.string().required().min(2).max(30),
+    source: Joi.string().required().min(2).max(100),
     link: Joi.string().required().uri(),
     image: Joi.string().required().uri(),
   }),

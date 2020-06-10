@@ -6,13 +6,16 @@ const {JWT_KEY} = require('../configuration/config');
 const NotFoundError = require('../errors/NotFoundError');
 
 module.exports.getUser = (req, res, next) => {
+  console.log('reqUser-------->>>>', req.user);
   User.findById(req.user._id)
     .orFail(() => {
+      console.log('getUser ERROR');
       throw new NotFoundError(USER_NOT_FOUND);
     })
     .then((user) => res.status(200).send({data: user}))
     .catch(next);
 };
+
 
 module.exports.createUser = (req, res, next) => {
   const {
@@ -31,11 +34,12 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.login = (req, res, next) => {
-  const {email, password} = req.body;
-  return User.findUserByCredentials(email, password)
+  const { email, password } = req.body;
+  User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({_id: user._id}, JWT_KEY, {expiresIn: '7d'});
-      res.send({token});
+      const token = jwt.sign({ _id: user._id }, JWT_KEY, { expiresIn: '7d' });
+      return res
+        .send({ token });
     })
     .catch(next);
 };
